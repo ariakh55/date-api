@@ -1,8 +1,12 @@
 import express from 'express'
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Hi')
-})
+import {
+  getToday
+} from '../controllers/gregorian'
 
-export { router as indexRoute }
+router.get('/api/today', getToday)
+
+export {
+  router as indexRoute
+}

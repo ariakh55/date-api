@@ -66,13 +66,6 @@ const getByPersianDate = (req, res) => {
   res.status(200).send(getDate(year, month, dayOfMonth, holiday))
 }
 
-const getToday = (req, res) => {
-  let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
-  let perDate = new persianDate();
-  res.status(200).send(getDate(perDate.year(), perDate.month(), perDate.date(), holiday))
-}
-
 export {
-  getByPersianDate,
-  getToday
+  getByPersianDate
 }

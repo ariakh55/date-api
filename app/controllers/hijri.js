@@ -73,14 +73,6 @@ const getByHijriDate = (req, res) => {
   res.status(200).send(getDate(year, month, dayOfMonth, holiday))
 }
 
-const getToday = (req, res) => {
-  let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
-  let date = new Date()
-  let hijriDate = toHijri(date.getFullYear, date.getMonth() + 1, date.getDate())
-  res.status(200).send(getDate(hijriDate.hy, hijriDate.hm, hijriDate.hd, holiday))
-}
-
 export {
-  getByHijriDate,
-  getToday
+  getByHijriDate
 }
