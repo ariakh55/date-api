@@ -66,6 +66,53 @@ const getByPersianDate = (req, res) => {
   res.status(200).send(getDate(year, month, dayOfMonth, holiday))
 }
 
+const getHolidays = (req, res) => {
+  let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
+
+  let year = new persianDate().year()
+
+  let fromMonth = Number(req.params.fromMonth)
+  let toMonth = Number(req.params.toMonth)
+
+  let fromPerDate = new persianDate([year, fromMonth, 1])
+  let toPerDate = new persianDate([year, toMonth, 31])
+  let fromDate = new Date(fromPerDate.toCalendar('gregorian').toLocale('en').format())
+  let toDate = new Date(toPerDate.toCalendar('gregorian').toLocale('en').format())
+  let fromHijDate = toHijri(fromDate.getFullYear(), fromDate.getMonth() + 1, fromDate.getDate())
+  let toHijDate = toHijri(toDate.getFullYear(), toDate.getMonth() + 1, toDate.getDate())
+
+  let selectedEvents = {
+    "PersianCalendar": [],
+    "HijriCalendar": []
+  }
+  events.PersianCalendar.forEach(day => {
+    if (day.month >= fromPerDate.month() && day.month <= toPerDate.month()) {
+      if (holiday === 'both' && day.holiday) {
+        selectedEvents.PersianCalendar.push(day)
+      } else if (holiday === 'afg' && day.holiday && day.type === "Afghanistan") {
+        selectedEvents.PersianCalendar.push(day)
+      } else if (holiday === 'irn' && day.holiday && day.type === "Iran") {
+        selectedEvents.PersianCalendar.push(day)
+      }
+    }
+  });
+  events.HijriCalendar.forEach(day => {
+    if (day.month >= fromHijDate.hm && day.month <= toHijDate.hm) {
+      if (holiday === 'both' && day.holiday) {
+        selectedEvents.HijriCalendar.push(day)
+      } else if (holiday === 'afg' && day.holiday && day.type === "Islamic Afghanistan") {
+        selectedEvents.HijriCalendar.push(day)
+      } else if (holiday === 'irn' && day.holiday && day.type === "Islamic Iran") {
+        selectedEvents.HijriCalendar.push(day)
+      }
+    }
+  });
+  res.status(200).send({
+    holidays: selectedEvents
+  })
+}
+
 export {
-  getByPersianDate
+  getByPersianDate,
+  getHolidays
 }
