@@ -77,7 +77,56 @@ const getToday = (req, res) => {
   res.status(200).send(getDate(date.getFullYear(), date.getMonth() + 1, date.getDate(), holiday))
 }
 
+const getHolidays = (req, res) => {
+  let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
+
+  let d = new Date()
+  let year = toHijri(d.getFullYear(),d.getMonth()-1,d.getDate()).hy
+  
+  let fromMonth = Number(req.params.fromMonth)
+  let toMonth = Number(req.params.toMonth)
+
+  let fromGregorianDate = new Date(year, fromMonth, 1)
+  let fromPersianDate = new PersianDate(fromGregorianDate)
+  let fromHijriDate = toHijri(fromGregorianDate.getFullYear(), fromGregorianDate.getMonth(), fromGregorianDate.getDate())
+
+  let toGregorianDate = new Date(year, toMonth, 1)
+  let toPersianDate = new PersianDate(toGregorianDate)
+  let toHijriDate = toHijri(toGregorianDate.getFullYear(), toGregorianDate.getMonth(), toGregorianDate.getDate())
+
+  let selectedEvents = {
+    "PersianCalendar": [],
+    "HijriCalendar": []
+  }
+  events.PersianCalendar.forEach(day => {
+    if (day.month >= fromPersianDate.month() && day.month <= toPersianDate.month()) {
+      if (holiday === 'both' && day.holiday) {
+        selectedEvents.PersianCalendar.push(day)
+      } else if (holiday === 'afg' && day.holiday && day.type === "Afghanistan") {
+        selectedEvents.PersianCalendar.push(day)
+      } else if (holiday === 'irn' && day.holiday && day.type === "Iran") {
+        selectedEvents.PersianCalendar.push(day)
+      }
+    }
+  });
+  events.HijriCalendar.forEach(day => {
+    if (day.month >= fromHijriDate.hm && day.month <= toHijriDate.hm) {
+      if (holiday === 'both' && day.holiday) {
+        selectedEvents.HijriCalendar.push(day)
+      } else if (holiday === 'afg' && day.holiday && day.type === "Islamic Afghanistan") {
+        selectedEvents.HijriCalendar.push(day)
+      } else if (holiday === 'irn' && day.holiday && day.type === "Islamic Iran") {
+        selectedEvents.HijriCalendar.push(day)
+      }
+    }
+  });
+  res.status(200).send({
+    holidays: selectedEvents
+  })
+}
+
 export {
   getByGregorianDate,
-  getToday
+  getToday,
+  getHolidays
 }
