@@ -1,11 +1,15 @@
 import events from '../events.json'
 import PersianDate from 'persian-date'
 import {
+  toGregorian,
   toHijri
 } from 'hijri-converter'
 import {
+  getShamsiDateFromHijriDay,
   dateIsInRange
 } from '../tools/tools'
+
+const hijriAdjustment = 1;
 
 const getDate = (year, month, dayOfMonth, holiday) => {
   let isHoliday = false
@@ -93,7 +97,7 @@ const getHolidays = (req, res) => {
   toPersianDate = toPersianDate.toCalendar('persian')
   let fromHijriDate = toHijri(fromGregorianDate.getFullYear(), fromGregorianDate.getMonth() + 1, fromGregorianDate.getDate())
   let toHijriDate = toHijri(toGregorianDate.getFullYear(), toGregorianDate.getMonth() + 1, toGregorianDate.getDate())
-  
+
   let selectedEvents = {
     "PersianCalendar": [],
     "HijriCalendar": []
@@ -118,10 +122,16 @@ const getHolidays = (req, res) => {
         toHijriDate.hy, toHijriDate.hm, toHijriDate.hd,
         fromHijriDate.hy, day.month, day.day)) {
       if (holiday === 'both' && day.holiday) {
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
+        day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       } else if (holiday === 'afg' && day.holiday && day.type === "Islamic Afghanistan") {
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
+        day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       } else if (holiday === 'irn' && day.holiday && day.type === "Islamic Iran") {
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
+        day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       }
     }
