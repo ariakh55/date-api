@@ -1,15 +1,16 @@
 import events from '../events.json'
-import persianDate from 'persian-date'
+import PersianDate from 'persian-date'
 import {
   toHijri
 } from 'hijri-converter'
 
 const getDate = (year, month, dayOfMonth, holiday) => {
   let isHoliday = false
-  let hijriAdjustment = 1;
 
   let hijriDate = toHijri(year, month, dayOfMonth)
-  let perDate = new persianDate(new Date(year, month - 1, dayOfMonth))
+  let gregorianDate = new Date(year, month - 1, dayOfMonth);
+  let persianDate = new PersianDate(gregorianDate)
+
 
   let selectedEvents = {
     "PersianCalendar": [],
@@ -17,7 +18,7 @@ const getDate = (year, month, dayOfMonth, holiday) => {
     "HijriCalendar": []
   }
   events.PersianCalendar.forEach(day => {
-    if (day.day === perDate.date() && day.month === perDate.month()) {
+    if (day.day === persianDate.date() && day.month === persianDate.month()) {
       selectedEvents.PersianCalendar.push(day)
       if (holiday === 'both' && day.holiday) {
         isHoliday = true
@@ -30,7 +31,7 @@ const getDate = (year, month, dayOfMonth, holiday) => {
   });
 
   events.GregorianCalendar.forEach(day => {
-    if (day.day === dayOfMonth && day.month === month) {
+    if (day.day === gregorianDate.getDate() && day.month === gregorianDate.getMonth()) {
       selectedEvents.GregorianCalendar.push(day)
     }
   });
@@ -48,9 +49,9 @@ const getDate = (year, month, dayOfMonth, holiday) => {
     }
   });
   return {
-    persianDate: perDate.toLocale('en').format("DD/MM/YYYY"),
+    persianDate: persianDate.toLocale('en').format("DD/MM/YYYY"),
     hijriDate: hijriDate.hd + "/" + hijriDate.hm + "/" + hijriDate.hy,
-    gregorianDate: dayOfMonth + "/" + month + "/" + year,
+    gregorianDate: gregorianDate.getDate() + "/" + (gregorianDate.getMonth() + 1) + "/" + gregorianDate.getFullYear(),
     events: selectedEvents,
     isHoliday: isHoliday
   }
