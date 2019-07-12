@@ -9,6 +9,9 @@ import bodyParser from 'body-parser'
 import {
   indexRoute
 } from './routes/index'
+import {
+  persianRoute
+} from './routes/persian'
 
 const app = express()
 //
@@ -28,6 +31,7 @@ app.use(express.static('app/public'))
 // Routes config
 //
 app.use(indexRoute)
+app.use(persianRoute)
 //
 // Start server
 //
