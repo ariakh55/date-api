@@ -6,7 +6,7 @@ import {
   getByHijriDate
 } from '../controllers/hijri'
 
-router.get('/api/hij/holidays/:fromMonth/:toMonth', getHolidays)
+router.get('/api/hij/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', getHolidays)
 router.get('/api/hij/:day/:month/:year?', getByHijriDate)
 
 export {

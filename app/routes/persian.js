@@ -6,7 +6,7 @@ import {
   getHolidays
 } from '../controllers/persian'
 
-router.get('/api/per/holidays/:fromMonth/:toMonth', getHolidays)
+router.get('/api/per/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', getHolidays)
 router.get('/api/per/:day/:month/:year?', getByPersianDate)
 
 export {

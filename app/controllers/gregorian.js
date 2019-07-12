@@ -3,13 +3,16 @@ import PersianDate from 'persian-date'
 import {
   toHijri
 } from 'hijri-converter'
+import {
+  dateIsInRange
+} from '../tools/tools'
 
 const getDate = (year, month, dayOfMonth, holiday) => {
   let isHoliday = false
 
-  let hijriDate = toHijri(year, month, dayOfMonth)
-  let gregorianDate = new Date(year, month - 1, dayOfMonth);
+  let gregorianDate = new Date(year, month - 1, dayOfMonth)
   let persianDate = new PersianDate(gregorianDate)
+  let hijriDate = toHijri(gregorianDate.getFullYear(), gregorianDate.getMonth() + 1, gregorianDate.getDate())
 
 
   let selectedEvents = {
@@ -80,26 +83,36 @@ const getToday = (req, res) => {
 const getHolidays = (req, res) => {
   let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
 
-  let d = new Date()
-  let year = toHijri(d.getFullYear(),d.getMonth()-1,d.getDate()).hy
-  
   let fromMonth = Number(req.params.fromMonth)
   let toMonth = Number(req.params.toMonth)
+  let fromYear = Number(req.params.fromYear)
+  let toYear = Number(req.params.toYear)
 
-  let fromGregorianDate = new Date(year, fromMonth, 1)
+  if (!fromYear || !toYear) {
+    let year = new Date().getFullYear()
+    fromYear = year;
+    toYear = year;
+  }
+
+  let fromGregorianDate = new Date(fromYear, fromMonth - 1, 1)
+  fromGregorianDate.setTime(fromGregorianDate.getTime() - fromGregorianDate.getTimezoneOffset() * 60 * 1000);
   let fromPersianDate = new PersianDate(fromGregorianDate)
-  let fromHijriDate = toHijri(fromGregorianDate.getFullYear(), fromGregorianDate.getMonth(), fromGregorianDate.getDate())
+  let fromHijriDate = toHijri(fromGregorianDate.getFullYear(), fromGregorianDate.getMonth() + 1, fromGregorianDate.getDate())
 
-  let toGregorianDate = new Date(year, toMonth, 1)
+  let toGregorianDate = new Date(toYear, toMonth - 1, 31)
+  toGregorianDate.setTime(toGregorianDate.getTime() - toGregorianDate.getTimezoneOffset() * 60 * 1000);
   let toPersianDate = new PersianDate(toGregorianDate)
-  let toHijriDate = toHijri(toGregorianDate.getFullYear(), toGregorianDate.getMonth(), toGregorianDate.getDate())
+  let toHijriDate = toHijri(toGregorianDate.getFullYear(), toGregorianDate.getMonth() + 1, toGregorianDate.getDate())
 
   let selectedEvents = {
     "PersianCalendar": [],
     "HijriCalendar": []
   }
   events.PersianCalendar.forEach(day => {
-    if (day.month >= fromPersianDate.month() && day.month <= toPersianDate.month()) {
+    if (dateIsInRange(
+        fromPersianDate.year(), fromPersianDate.month(), fromPersianDate.date(),
+        toPersianDate.year(), toPersianDate.month(), toPersianDate.date(),
+        fromPersianDate.year(), day.month, day.day)) {
       if (holiday === 'both' && day.holiday) {
         selectedEvents.PersianCalendar.push(day)
       } else if (holiday === 'afg' && day.holiday && day.type === "Afghanistan") {
@@ -110,7 +123,10 @@ const getHolidays = (req, res) => {
     }
   });
   events.HijriCalendar.forEach(day => {
-    if (day.month >= fromHijriDate.hm && day.month <= toHijriDate.hm) {
+    if (dateIsInRange(
+        fromHijriDate.hy, fromHijriDate.hm, fromHijriDate.hd,
+        toHijriDate.hy, toHijriDate.hm, toHijriDate.hd,
+        fromHijriDate.hy, day.month, day.day)) {
       if (holiday === 'both' && day.holiday) {
         selectedEvents.HijriCalendar.push(day)
       } else if (holiday === 'afg' && day.holiday && day.type === "Islamic Afghanistan") {
