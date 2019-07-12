@@ -1,13 +1,18 @@
 import events from '../events.json'
 import persianDate from 'persian-date'
 import {
+  toGregorian,
   toHijri
 } from 'hijri-converter'
 
 const getDate = (year, month, dayOfMonth, holiday) => {
   let isHoliday = false
+  let hijriAdjustment = 1;
 
-  let perDate = new persianDate([year, month, dayOfMonth])
+  let greDate = toGregorian(year, month, dayOfMonth)
+  let d = new Date(greDate.gy, greDate.gm - 1, greDate.gd + hijriAdjustment)
+  let perDate = new persianDate(d)
+
   let selectedEvents = {
     "PersianCalendar": [],
     "GregorianCalendar": [],
@@ -25,15 +30,15 @@ const getDate = (year, month, dayOfMonth, holiday) => {
       }
     }
   });
-  let d = new Date(perDate.toCalendar('gregorian').toLocale('en').format())
+
   events.GregorianCalendar.forEach(day => {
     if (day.day === d.getDate() && day.month === d.getMonth() + 1) {
       selectedEvents.GregorianCalendar.push(day)
     }
   });
-  let hijDate = toHijri(d.getFullYear(), d.getMonth() + 1, d.getDate())
+
   events.HijriCalendar.forEach(day => {
-    if (day.day === hijDate.hd && day.month === hijDate.hm) {
+    if (day.day === dayOfMonth && day.month === month) {
       selectedEvents.HijriCalendar.push(day)
       if (holiday === 'both' && day.holiday) {
         isHoliday = true
@@ -46,21 +51,23 @@ const getDate = (year, month, dayOfMonth, holiday) => {
   });
   return {
     persianDate: perDate.toCalendar('persian').toLocale('en').format("DD/MM/YYYY"),
-    hijriDate: hijDate.hd + "/" + hijDate.hm + "/" + hijDate.hy,
+    hijriDate: dayOfMonth + "/" + month + "/" + year,
     gregorianDate: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
     events: selectedEvents,
     isHoliday: isHoliday
   }
 }
 
-const getByPersianDate = (req, res) => {
+const getByHijriDate = (req, res) => {
   let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
   let year = Number(req.params.year)
   let month = Number(req.params.month)
   let dayOfMonth = Number(req.params.day)
 
   if (!year) {
-    year = new persianDate().year()
+    let date = new Date()
+    let hijriDate = toHijri(date.getFullYear, date.getMonth() + 1, date.getDate())
+    year = hijriDate.hy
   }
 
   res.status(200).send(getDate(year, month, dayOfMonth, holiday))
@@ -68,11 +75,12 @@ const getByPersianDate = (req, res) => {
 
 const getToday = (req, res) => {
   let holiday = req.query.holiday === 'afg' ? 'afg' : req.query.holiday === 'irn' ? 'irn' : 'both'
-  let perDate = new persianDate();
-  res.status(200).send(getDate(perDate.year(), perDate.month(), perDate.date(), holiday))
+  let date = new Date()
+  let hijriDate = toHijri(date.getFullYear, date.getMonth() + 1, date.getDate())
+  res.status(200).send(getDate(hijriDate.hy, hijriDate.hm, hijriDate.hd, holiday))
 }
 
 export {
-  getByPersianDate,
+  getByHijriDate,
   getToday
 }

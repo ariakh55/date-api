@@ -14,7 +14,7 @@
   "dependencies": {
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "hijri": "^0.5.0",
+    "hijri-converter": "^1.1.1",
     "persian-date": "^1.1.0"
   }
 }

@@ -12,6 +12,9 @@ import {
 import {
   persianRoute
 } from './routes/persian'
+import {
+  hijriRoute
+} from './routes/hijri'
 
 const app = express()
 //
@@ -32,6 +35,7 @@ app.use(express.static('app/public'))
 //
 app.use(indexRoute)
 app.use(persianRoute)
+app.use(hijriRoute)
 //
 // Start server
 //
