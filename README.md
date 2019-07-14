@@ -2,7 +2,7 @@
 
 An API for Persian Calendar events and holidays.
 
-This is a young project to answer the need of laking a complete API for persian calendar events and holidays.
+This is a young project to answer the need of lacking a complete API for persian calendar events and holidays.
 
 There are some similar works, but they all have problems and are not open-source so I can not help improve them.
 
