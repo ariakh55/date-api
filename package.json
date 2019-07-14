@@ -1,9 +1,9 @@
 {
-  "name": "PersianCalendarAPI",
+  "name": "dateapi",
   "version": "1.0.0",
   "description": "An API for Persian Calendar events",
   "main": "app/app.js",
-  "repository": "https://gitlab.com/molaeiali/persian-calendar-api.git",
+  "repository": "https://gitlab.com/molaeiali/date-api.git",
   "author": "Ali Molaei <ali.molaei@protonmail.com>",
   "license": "GPL-v3",
   "private": true,
