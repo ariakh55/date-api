@@ -16,5 +16,8 @@
     "express": "^4.17.1",
     "hijri-converter": "^1.1.1",
     "persian-date": "^1.1.0"
+  },
+  "apidoc": {
+    "title": "DateAPI API Doc"
   }
 }
