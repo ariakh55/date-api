@@ -38,7 +38,7 @@ const getDate = (year, month, dayOfMonth, holiday) => {
   });
 
   events.GregorianCalendar.forEach(day => {
-    if (day.day === gregorianDate.getDate() && day.month === gregorianDate.getMonth()) {
+    if (day.day === gregorianDate.getDate() && day.month === gregorianDate.getMonth() + 1) {
       selectedEvents.GregorianCalendar.push(day)
     }
   });
@@ -132,15 +132,15 @@ const getHolidays = (req, res) => {
         toHijriDate.hy, toHijriDate.hm, toHijriDate.hd,
         fromHijriDate.hy, day.month, day.day)) {
       if (holiday === 'both' && day.holiday) {
-        let pdate = getShamsiDateFromHijriDay(day, toGregorian,PersianDate)
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
         day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       } else if (holiday === 'afg' && day.holiday && day.type === "Islamic Afghanistan") {
-        let pdate = getShamsiDateFromHijriDay(day, toGregorian,PersianDate)
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
         day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       } else if (holiday === 'irn' && day.holiday && day.type === "Islamic Iran") {
-        let pdate = getShamsiDateFromHijriDay(day, toGregorian,PersianDate)
+        let pdate = getShamsiDateFromHijriDay(day, toGregorian, PersianDate)
         day['persianDate'] = (pdate.date() + hijriAdjustment) + '/' + pdate.month()
         selectedEvents.HijriCalendar.push(day)
       }
