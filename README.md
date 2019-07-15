@@ -16,7 +16,6 @@ Documentations on how to use it exists under this link: [Docs](https://dateapi.i
 
 - Create a suitable homepage.
 - Move events.json file to a database so it is queriable and more efficient
-- Validate the input values
 - Make date conversion process more abstract to have a more clean code. (Create suitable functions in tools/tools.js maybe and use them)
 
 # References
