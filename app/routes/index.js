@@ -6,13 +6,13 @@ import {
 } from '../controllers/gregorian'
 
 /**
- * @api {get} /api/today?holiday=something Today
+ * @api {get} /api/today?eventType=something Today
  * @apiName Today
  * @apiGroup General
  * @apiVersion 1.0.0
  * @apiDescription Get events of today.
  *
- * @apiParam {String="irn","afg","both"} [holiday="both"] You can filter between Iranian events and Afghanistan events.
+ * @apiParam {String="irn","afg","both"} [eventType="both"] You can filter between Iranian events and Afghanistan events.
  *
  * @apiSuccess {String} persianDate Selected date converted to Persian Calendar in DD/MM/YYYY format.
  * @apiSuccess {String} hijriDate Selected date converted to Hijri Calendar in DD/MM/YYYY format.

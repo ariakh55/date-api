@@ -11,7 +11,7 @@ import {
 } from '../controllers/persian'
 
 /**
- * @api {get} /api/per/holidays/:fromMonth/:fromYear/:toMonth/:toYear?holiday=something Holidays
+ * @api {get} /api/per/holidays/:fromMonth/:fromYear/:toMonth/:toYear?eventType=something Holidays
  * @apiName Holidays
  * @apiGroup Persian
  * @apiVersion 1.0.0
@@ -21,7 +21,7 @@ import {
  * @apiParam {Number} [fromYear] Year number that you want to calculate holidays from that year.
  * @apiParam {Number{1..12}} toMonth Month number that you want to calculate holidays to that month.
  * @apiParam {Number} [toYear] Month number that you want to calculate holidays to that year.
- * @apiParam {String="irn","afg","both"} [holiday="both"] You can filter between Iranian events and Afghanistan events.
+ * @apiParam {String="irn","afg","both"} [eventType="both"] You can filter between Iranian events and Afghanistan events.
  *
  * @apiSuccess {Object} holidays A JSON Object containing two arrays of PersianCalendar & HijriCalendar holidays containing Events.
  *
@@ -82,7 +82,7 @@ router.get('/api/per/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', checkSch
   }
 }), getHolidays)
 /**
- * @api {get} /api/per/events/:day/:month/:year?holiday=something Events
+ * @api {get} /api/per/events/:day/:month/:year?eventType=something Events
  * @apiName Events
  * @apiGroup Persian
  * @apiVersion 1.0.0
@@ -91,7 +91,7 @@ router.get('/api/per/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', checkSch
  * @apiParam {Number{1..31}} day Day of the date you want to lookup.
  * @apiParam {Number{1..12}} month Month of the date you want to lookup.
  * @apiParam {Number} [year] Year of the date you want to lookup.
- * @apiParam {String="irn","afg","both"} [holiday="both"] You can filter between Iranian events and Afghanistan events.
+ * @apiParam {String="irn","afg","both"} [eventType="both"] You can filter between Iranian events and Afghanistan events.
  *
  * @apiSuccess {String} persianDate Selected date converted to Persian Calendar in DD/MM/YYYY format.
  * @apiSuccess {String} hijriDate Selected date converted to Hijri Calendar in DD/MM/YYYY format.
