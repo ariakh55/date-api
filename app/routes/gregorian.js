@@ -2,12 +2,16 @@ import express from 'express'
 const router = express.Router()
 
 import {
+  checkSchema
+} from 'express-validator'
+
+import {
   getHolidays,
   getByGregorianDate
 } from '../controllers/gregorian'
 
 /**
- * @api {get} /api/gre/holidays/:fromMonth/:fromYear/:toMonth/:toYear/?holiday=something Holidays
+ * @api {get} /api/gre/holidays/:fromMonth/:fromYear/:toMonth/:toYear?holiday=something Holidays
  * @apiName Holidays
  * @apiGroup Gregorian
  * @apiVersion 1.0.0
@@ -23,9 +27,62 @@ import {
  *
  * @apiError {String} msg Error message.
  */
-router.get('/api/gre/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', getHolidays)
+router.get('/api/gre/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', checkSchema({
+  fromMonth: {
+    in: ['params'],
+    errorMessage: 'fromMonth is required',
+    isInt: {
+      errorMessage: 'toMonth should be a number between 1 and 12',
+      options: {
+        min: 1,
+        max: 12
+      }
+    },
+  },
+  fromYear: {
+    in: ['params'],
+    errorMessage: 'fromYear should be a number',
+    isInt: {
+      errorMessage: 'fromYear should be a positive number',
+      options: {
+        gt: 0
+      }
+    },
+    optional: {
+      options: {
+        nullable: true
+      }
+    }
+  },
+  toMonth: {
+    in: ['params'],
+    errorMessage: 'toMonth is required',
+    isInt: {
+      errorMessage: 'toMonth should be a number between 1 and 12',
+      options: {
+        min: 1,
+        max: 12
+      }
+    },
+  },
+  toYear: {
+    in: ['params'],
+    errorMessage: 'toYear should be a number',
+    isInt: {
+      errorMessage: 'toYear should be a positive number',
+      options: {
+        gt: 0
+      }
+    },
+    optional: {
+      options: {
+        nullable: true
+      }
+    },
+  }
+}), getHolidays)
 /**
- * @api {get} /api/gre/:day/:month/:year Events
+ * @api {get} /api/gre/events/:day/:month/:year?holiday=something Events
  * @apiName Events
  * @apiGroup Gregorian
  * @apiVersion 1.0.0
@@ -44,7 +101,45 @@ router.get('/api/gre/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', getHolid
  *
  * @apiError {String} msg Error message.
  */
-router.get('/api/gre/:day/:month/:year?', getByGregorianDate)
+router.get('/api/gre/events/:day/:month/:year?', checkSchema({
+  day: {
+    in: ['params'],
+    errorMessage: 'day is required',
+    isInt: {
+      errorMessage: 'day should be a number between 1 and 31',
+      options: {
+        min: 1,
+        max: 31
+      }
+    },
+  },
+  month: {
+    in: ['params'],
+    errorMessage: 'month should be a number',
+    isInt: {
+      errorMessage: 'month should be a number between 1 and 12',
+      options: {
+        min: 1,
+        max: 12
+      }
+    }
+  },
+  year: {
+    in: ['params'],
+    errorMessage: 'year should be a number',
+    isInt: {
+      errorMessage: 'year should be a positive number',
+      options: {
+        gt: 0
+      }
+    },
+    optional: {
+      options: {
+        nullable: true
+      }
+    },
+  }
+}), getByGregorianDate)
 
 export {
   router as gregorianRoute

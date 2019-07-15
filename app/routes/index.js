@@ -6,7 +6,7 @@ import {
 } from '../controllers/gregorian'
 
 /**
- * @api {get} /api/today Today
+ * @api {get} /api/today?holiday=something Today
  * @apiName Today
  * @apiGroup General
  * @apiVersion 1.0.0

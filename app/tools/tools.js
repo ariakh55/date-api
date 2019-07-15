@@ -2,6 +2,10 @@ const shamsiStartDayOfHijri = 14
 const shamsiStartMonthOfHijri = 7
 const shamsiStartYearOfHijri = 1440
 
+import {
+  validationResult
+} from 'express-validator'
+
 const dateIsInRange = (fromYear, fromMonth, fromDay, toYear, toMonth, toDay, year, month, day) => {
   return dateIsLargerThan(fromYear, fromMonth, fromDay, year, month, day) && dateIsSmallerThan(toYear, toMonth, toDay, year, month, day)
 }
@@ -41,7 +45,30 @@ const dateIsSmallerThan = (toYear, toMonth, toDay, year, month, day) => {
   return result
 }
 
+const createErrorMessages = (errors) => {
+  let messages = ''
+  for (let i = 0; i < errors.array().length; i++) {
+    messages += errors.array()[i].msg
+    if (i !== errors.array().length - 1) {
+      messages += '\n'
+    }
+  }
+  return messages
+}
+
+const handleErrors = (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    res.status(400).send({
+      msg: createErrorMessages(errors)
+    })
+  } else {
+    next()
+  }
+}
+
 export {
+  handleErrors,
   dateIsInRange,
   getShamsiDateFromHijriDay
 }
