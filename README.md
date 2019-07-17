@@ -12,11 +12,12 @@ This project is hosted on [DateAPI.ir](https://dateapi.ir)
 
 Documentations on how to use it exists under this link: [Docs](https://dateapi.ir/docs)
 
-# Works to do (Open to any contributions)
+# TODO (Open to any contributions)
 
-- Create a suitable homepage.
-- Move events.json file to a database so it is queriable and more efficient
-- Make date conversion process more abstract to have a more clean code. (Create suitable functions in tools/tools.js maybe and use them)
+- [x] Add verification to API inputs.
+- [ ] Create a suitable homepage.
+- [ ] Move events.json file to a database so it is queriable and more efficient.
+- [ ] Make date conversion process more abstract to have a more clean code. (Create suitable functions in tools/tools.js maybe and use them).
 
 # References
 
