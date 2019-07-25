@@ -31,11 +31,11 @@ import {
 router.get('/api/today', getToday)
 
 /**
- * @api {get} /api/timestamp/:timestamp?eventType=something Today
- * @apiName Today
+ * @api {get} /api/timestamp/:timestamp?eventType=something Timestamp
+ * @apiName Timestamp
  * @apiGroup General
  * @apiVersion 1.0.0
- * @apiDescription Get events of today.
+ * @apiDescription Get events of a timestamp.
  *
  * @apiParam {Number{1..31}} timestamp Timestamp in in miliseconds. (like: 1564058554000)
  * @apiParam {String="irn","afg","both"} [eventType="both"] You can filter between Iranian events and Afghanistan events.
