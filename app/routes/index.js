@@ -38,7 +38,7 @@ router.get('/api/today', getToday)
  * @apiVersion 1.0.0
  * @apiDescription Get events of a timestamp.
  *
- * @apiParam {Number{1..31}} timestamp Timestamp in in miliseconds. (like: 1564058554000)
+ * @apiParam {Number} timestamp Timestamp in in miliseconds. (like: 1564058554000)
  * @apiParam {String="irn","afg","both"} [eventType="both"] You can filter between Iranian events and Afghanistan events.
  *
  * @apiSuccess {String} persianDate Selected date converted to Persian Calendar in DD/MM/YYYY format.
