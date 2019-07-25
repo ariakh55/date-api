@@ -3,6 +3,9 @@
 
 <head>
     <title>DateAPI</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="pretty-print-json.css">
+    <script src="pretty-print-json.js"></script>
 </head>
 
 <body>
@@ -20,12 +23,38 @@
     </p>
     <h2> Works to do (Open to any contributions)</h2>
     <p>
-      See the GitLab page: <a href="https://gitlab.com/molaeiali/date-api">GitLab</a>
+        See the GitLab page: <a href="https://gitlab.com/molaeiali/date-api">GitLab</a>
     </p>
     <h2> References</h2>
     <p>
         This project is using events collected by <a href="https://github.com/ebraminio/DroidPersianCalendar">DroidPersianCalendar</a>
     </p>
+
+    <h2> You can also use timestamps, give it a go! :D</h2>
+    <label for="timestamp">Timestamp in milliseconds:</label>
+    <input type="number" id="timestamp" name="timestamp" />
+    <input type="submit" id="submit_timestamp" name="submit_timestamp" />
+    <pre id="result"></pre>
+    <script>
+        $("#submit_timestamp").click(function() {
+            let timestamp = $("#timestamp").val();
+            $.ajax({
+                url: "/api/timestamp/" + timestamp,
+                success: function(result) {
+                    $("#result").html(prettyPrintJson.toHtml(result));
+                }
+            });
+        });
+
+        document.getElementById("timestamp").placeholder = new Date().getTime();
+        document.getElementById("timestamp").value = new Date().getTime();
+        document.getElementById("timestamp").addEventListener('keypress', function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("#submit_timestamp").click();
+            }
+        });
+    </script>
 </body>
 
 </html>
