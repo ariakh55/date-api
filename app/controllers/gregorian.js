@@ -162,7 +162,14 @@ const getHolidays = (req, res) => {
   })
 }
 
+const getDateByTimestamp = (req,res) => {
+  let eventType = req.query.eventType === 'afg' ? 'afg' : req.query.eventType === 'irn' ? 'irn' : 'both'
+  let date = new Date(Number(req.params.timestamp))
+  res.status(200).send(getDate(date.getFullYear(), date.getMonth() + 1, date.getDate(), eventType))
+}
+
 export {
+  getDateByTimestamp,
   getByGregorianDate,
   getToday,
   getHolidays
