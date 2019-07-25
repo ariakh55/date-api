@@ -67,6 +67,7 @@ const getDate = (year, month, dayOfMonth, eventType) => {
     hijriDate: hijriDate.hd + "/" + hijriDate.hm + "/" + hijriDate.hy,
     gregorianDate: gregorianDate.getDate() + "/" + (gregorianDate.getMonth() + 1) + "/" + gregorianDate.getFullYear(),
     events: selectedEvents,
+    timestamp: gregorianDate.getTime(),
     isHoliday: isHoliday
   }
 }

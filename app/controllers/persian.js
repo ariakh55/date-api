@@ -64,6 +64,7 @@ const getDate = (year, month, dayOfMonth, eventType) => {
     persianDate: persianDate.toCalendar('persian').toLocale('en').format("DD/MM/YYYY"),
     hijriDate: hijriDate.hd + "/" + hijriDate.hm + "/" + hijriDate.hy,
     gregorianDate: gregorianDate.getDate() + "/" + (gregorianDate.getMonth() + 1) + "/" + gregorianDate.getFullYear(),
+    timestamp: gregorianDate.getTime(),
     events: selectedEvents,
     isHoliday: isHoliday
   }

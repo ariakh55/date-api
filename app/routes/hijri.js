@@ -96,6 +96,7 @@ router.get('/api/hij/holidays/:fromMonth/:fromYear?/:toMonth/:toYear?', checkSch
  * @apiSuccess {String} persianDate Selected date converted to Persian Calendar in DD/MM/YYYY format.
  * @apiSuccess {String} hijriDate Selected date converted to Hijri Calendar in DD/MM/YYYY format.
  * @apiSuccess {String} gregorianDate Selected date converted to Gregorian Calendar in DD/MM/YYYY format.
+ * @apiSuccess {Number} timestamp Timestamp of the selected date in milliseconds.
  * @apiSuccess {Object} events A JSON Object containing three arrays of PersianCalendar, HijriCalendar and GregorianCalendar Events.
  * @apiSuccess {Boolean} isHoliday Indicates that is this day a holiday or not.
  *
