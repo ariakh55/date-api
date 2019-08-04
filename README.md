@@ -10,7 +10,7 @@ There are some similar works, but they all have problems and are not open-source
 
 This project is hosted on [DateAPI.ir](https://dateapi.ir)
 
-Documentations on how to use it exists under this link: [Docs](https://dateapi.ir/docs)
+Documentations on how to use it exists under this link: [Documentations](https://dateapi.ir/docs)
 
 # TODO (Open to any contributions)
 
