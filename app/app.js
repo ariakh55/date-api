@@ -3,6 +3,7 @@
 //
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 //
 // Routes
 //
@@ -29,6 +30,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json({
   limit: '5mb'
 }))
+//
+// CORS config
+//
+app.use(cors())
 //
 // Public folder config
 //
