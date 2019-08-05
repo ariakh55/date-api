@@ -10,11 +10,12 @@ There are some similar works, but they all have problems and are not open-source
 
 This project is hosted on [DateAPI.ir](https://dateapi.ir)
 
-Documentations on how to use it exists under this link: [Docs](https://dateapi.ir/docs)
+Documentations on how to use it exists under this link: [Documentations](https://dateapi.ir/docs)
 
 # TODO (Open to any contributions)
 
 - [x] Add verification to API inputs.
+- [x] Add timestamp conversions to the APIs.
 - [ ] Create a suitable homepage.
 - [ ] Move events.json file to a database so it is queriable and more efficient.
 - [ ] Make date conversion process more abstract to have a more clean code. (Create suitable functions in tools/tools.js maybe and use them).
