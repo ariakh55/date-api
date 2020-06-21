@@ -19,7 +19,7 @@ Documentations on how to use it exists under this link: [Documentations](https:/
 - [ ] Create a suitable homepage.
 - [ ] Move events.json file to a database so it is queriable and more efficient.
 - [ ] Make date conversion process more abstract to have a more clean code. (Create suitable functions in tools/tools.js maybe and use them).
-
+- [ ] Add day of week (sat,sun,mon,etc)
 # References
 
 This project is using events collected by [DroidPersianCalendar](https://github.com/ebraminio/DroidPersianCalendar)
