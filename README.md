@@ -1,3 +1,9 @@
+==================== **ATTENTION** ====================
+
+**Please read this issue:** https://gitlab.com/molaeiali/date-api/-/issues/7
+
+==================== **ATTENTION** ====================
+
 # DateAPI
 
 An API for Persian Calendar events and holidays.
