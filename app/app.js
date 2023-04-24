@@ -19,6 +19,9 @@ import {
 import {
   gregorianRoute
 } from './routes/gregorian'
+import {
+  getCalendar
+} from './services/persian'
 
 const app = express()
 //
@@ -48,6 +51,7 @@ app.use(gregorianRoute)
 //
 // Start server
 //
+getCalendar('1402','02');
 app.listen(process.env.PER_CAL_PORT, () => {
   console.log('Persian Calendar API app started on port ' + process.env.PER_CAL_PORT)
 })

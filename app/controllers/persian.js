@@ -10,7 +10,7 @@ import {
   handleErrors,
   getShamsiDateFromHijriDay,
   dateIsInRange
-} from '../tools/tools'
+} from '../tools/tools.js'
 
 const hijriAdjustment = 1;
 

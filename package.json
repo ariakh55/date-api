@@ -1,6 +1,7 @@
 {
-  "name": "dateapi",
+  "name": "@etka/dateapi",
   "version": "1.0.0",
+  "type": "module",  
   "description": "An API for Persian Calendar events",
   "main": "app/app.js",
   "repository": "https://gitlab.com/molaeiali/date-api.git",
